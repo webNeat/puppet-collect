@@ -4,6 +4,7 @@
 
 1. [Overview](#overview)
 2. [Usage](#usage)
+3. [Todo](#todo)
 
 ##Overview
 
@@ -11,6 +12,19 @@ This module have been created to do exactly what puppetlabs-concat module
 does but in more efficient way. That's it, it constructs files from multiple 
 fragments in an ordered way. But doesn't require additional space to save 
 fragments temporary and doesn't depend on any other module.
+
+The main problem I had when using puppetlabs-concat module was the execution 
+time. When I generated 1500 files, every file from 4 or 5 fragments, it takes
+more then 50 minutes for the catalog to be executed in the agent. So I read
+the puppetlabs-concat code I said that it creates one file for every fragment 
+and updates the final file every time a fragment is added. Isn't there any more
+simple way to do it ?
+
+My first try was using some global variable which will hold all fragments and 
+create files only at the end. But it didn't work because puppet doesn't allow
+changing the values of variables in other scope ! So I finally ended by just
+declaring resources and then collect them using a template. And it just works 
+fine and finish execution more quickly.
 
 ##Usage
 
@@ -78,3 +92,7 @@ class apache {
   motd::register{ 'Apache': }
 }
 ```
+##Todo
+
+add missing arguments to collect::file ressource trying to make it just like file ressource 
+ 
