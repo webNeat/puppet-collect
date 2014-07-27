@@ -1,0 +1,20 @@
+<%- 
+parts = Array.new
+# Reading Parts
+scope.compiler.catalog.vertices.each do |resource|
+	if resource.type == "Collect::Part" 
+		if resource['target'] == @name 
+			if resource['source'] == nil
+				parts << { :order => resource['order'], :content => resource['content'] }
+			else
+				file = File.open(resource['source'], "r")
+				parts << { :order => resource['order'], :content => file.read }
+			end
+		end
+	end
+end 
+# Sorting Parts
+parts.sort! { |x,y| x[:order] <=> y[:order] }
+
+# Showing sorted parts
+parts.each do |part| -%><%=part[:content]%><%- end -%>

@@ -1,0 +1,8 @@
+name 'puppet-collect'
+version '1.1.0'
+source 'git://github.com/webneat/puppet-collect.git'
+author 'webNeat'
+license 'Apache 2.0'
+summary 'Collect module'
+description 'Concat module in more efficient way'
+project_page 'http://github.com/webneat/puppet-collect'
